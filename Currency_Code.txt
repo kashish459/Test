@@ -58,8 +58,8 @@ Currency/src/com/spring/app/CurrencyConverter.java
    40              }
    41          }
    42          return n;
-   43          //st=st+s.substring(1);
-   44         /* st=st.toUpperCase();
+   43          /*st=st+s.substring(1);
+   44          st=st.toUpperCase();
    45          if(st.equals("DOLLAR"))
    46          return n*65;
    47          else if(st.equals("EURO"))
