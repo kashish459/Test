@@ -1,0 +1,93 @@
+Currency/src/beans.xml
+    1 <beans xmlns="http://www.springframework.org/schema/beans" 
+    2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    3 xsi:schemaLocation="http://www.springframework.org/schema/beans
+    4 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    5 <bean id="cc" class="com.spring.app.CurrencyConverter">
+    6     <property name="mObj">
+    7         <map>
+    8             <entry key="DOLLAR" value="65"/>
+    9             <entry key="EURO" value="80"/>
+   10             <entry key="DINAR" value="218"/>
+   11         </map>
+   12     </property>
+   13 </bean>
+   14 
+   15 	
+   16 </beans>
+Currency/src/com/spring/app/CurrencyConverter.java
+    1 package com.spring.app;
+    2 import java.util.*;
+    3 
+    4 public class CurrencyConverter {
+    5     Map<String,String> mObj;
+    6     
+    7     public void setMObj(Map<String,String> m)
+    8     {
+    9         this.mObj=m;
+   10     }
+   11     public Map<String,String> getMObj()
+   12  	{
+   13  	    return this.mObj;
+   14  	}    	    	     	      	 	
+   15      public int getTotalCurrencyValue(String s){
+   16          //char ch=s.charAt(0);
+   17          //int n;//=Integer.parseInt(ch);
+   18          String st;
+   19          String s1=new String(s);
+   20          String s2=new String(s);
+   21          
+   22          st=s1.replaceAll("[0-9]","");
+   23          int n=Integer.parseInt(s.replaceAll("[^0-9]",""));
+   24         /* for(int i=0;i<s.length();i++)
+   25          {
+   26              if(s.charAt(i)>='0' && s.charAt(i)<='9')
+   27              number=number+(s.charAt(i));
+   28              else
+   29              st=st+s.charAt(i);
+   30          }
+   31          n=Integer.parseInt(number);*/
+   32          
+   33          for(Map.Entry<String,String> entry : mObj.entrySet())
+   34          {
+   35              Integer val=Integer.parseInt(entry.getValue());
+   36              String key=entry.getKey();
+   37              if(key.equalsIgnoreCase(st))
+   38              {n=n*val;
+   39              break;
+   40              }
+   41          }
+   42          return n;
+   43          //st=st+s.substring(1);
+   44         /* st=st.toUpperCase();
+   45          if(st.equals("DOLLAR"))
+   46          return n*65;
+   47          else if(st.equals("EURO"))
+   48          return n*80;
+   49          else if(st.equals("DINAR"))
+   50          return 218*n;
+   51          
+   52          return 0;*/
+   53      }
+   54 }
+   55 
+Currency/src/com/spring/app/Driver.java
+    1 package com.spring.app;
+    2 import java.util.*;
+    3 import org.springframework.context.ApplicationContext;
+    4 import org.springframework.context.support.ClassPathXmlApplicationContext;
+    5 public class Driver {
+    6 	
+    7 public static void main(String[] args)
+    8 {
+    9 	Scanner sc = new Scanner(System.in);
+   10 	ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+   11 	CurrencyConverter cc =(CurrencyConverter)ctx.getBean("cc");
+   12 	System.out.println("Enter the string");
+   13 	String s=sc.nextLine();
+   14 	int result=cc.getTotalCurrencyValue(s);
+   15 	System.out.println(result);
+   16 }
+   17 
+   18 }
+   19 
